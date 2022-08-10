@@ -1,10 +1,17 @@
+package uk.co.bbc.bookshop.domain
+
 trait Sales {
   var price: Price
   var salesPercentage: Double = 0.0
   def calcSalePrice() : Unit = {
     val difference: Price = (price / 100) * salesPercentage
-    price - difference
+    price = price - difference
   }
+}
+
+trait Print {
+  self: Price =>
+  def print() : Unit = println(this)
 }
 
 abstract class Product(val name: String, var price : Price, val publisher : Publisher, val genre : Genre)
@@ -12,19 +19,16 @@ abstract class Product(val name: String, var price : Price, val publisher : Publ
 
 class Book(_name: String,
            _price: Price,
-           // Author only accepts Option type
+           // uk.co.bbc.bookshop.domain.Author only accepts Option type
            val author: Option[Author],
            _publisher: Publisher,
            _genre: Genre) extends Product(_name, _price, _publisher, _genre) {
 
-  // Pulled from Sales trait
+  // Pulled from uk.co.bbc.bookshop.domain.Sales trait
   salesPercentage = 10.0
   calcSalePrice()
 
-  // Pulls the author name from Option container, or "Anonymous" if None (empty container)
-  val authorName = author.getOrElse("Anonymous")
-
-  override def toString() = f"Book($name, $price, $authorName, \n$publisher, $genre)"
+  override def toString() = f"($name, $price, ${author.getOrElse("Anonymous")}, \n$publisher, $genre)"
 
   def canEqual(other: Any): Boolean = other.isInstanceOf[Book]
 
@@ -33,7 +37,8 @@ class Book(_name: String,
         name == that.name &&
         price == that.price &&
         author == that.author &&
-        publisher == that.publisher
+        publisher == that.publisher &&
+        genre == that.genre
     case _ => false
   }
 
@@ -48,7 +53,7 @@ final case class Address(number: Int, street: String, city: String, county: Stri
 
 final case class Publisher(name: String, address: Address)
 
-case class Price(value: Double) {
+final case class Price(value: Double) extends Print {
   def +(p: Double) : Price = Price(value + p)
   def -(p: Double) : Price = Price(value - p)
   def *(p: Double) : Price = Price(value * p)
