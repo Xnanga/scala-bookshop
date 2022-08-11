@@ -17,6 +17,16 @@ object BookShop {
     println(s"Books: ${books}\n")
   }
 
+  val applyToGenre = (func: Book => Unit, genre: Genre) => {
+    val selectedBooks = books.getOrElse(genre, Nil)
+    if (selectedBooks != Nil ) {
+      println("All Books of One Genre")
+      println("-" * 25)
+      selectedBooks
+        .foreach(book => func(book))
+    }
+  }
+
 //  private def setupBooks(): Book = {
 //    val author = Author("Pete Smith")
 //    val address = Address(10, "High Street", "Salisbury", "Wiltshire", "SL10 34D")

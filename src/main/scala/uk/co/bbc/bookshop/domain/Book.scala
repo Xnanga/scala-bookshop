@@ -1,5 +1,7 @@
 package uk.co.bbc.bookshop.domain
 
+import scala.util.{Failure, Success, Try}
+
 trait Sales {
   var price: Price
   var salesPercentage: Double = 0.0
@@ -15,7 +17,9 @@ trait Print {
 }
 
 abstract class Product(val name: String, var price : Price, val publisher : Publisher, val genre : Genre)
-  extends Sales
+  extends Sales {
+  if ( price.value <= 0.0 ) throw new BookShopException("Price cannot be 0 or a negative number")
+}
 
 class Book(_name: String,
            _price: Price,

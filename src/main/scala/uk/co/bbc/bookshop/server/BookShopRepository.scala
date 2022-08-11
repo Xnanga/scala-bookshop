@@ -7,7 +7,7 @@ object BookShopRepository {
   private val address = Address(10, "High Street", "Salisbury", "Wiltshire", "SL10 34D")
   private val publisher = Publisher("Tech Books Publishing Ltd.", address)
 
-  val technicalBooks = List(new Book("Scala Unleashed", Price(15.95), Some(author), publisher, Technical), new Book("Python in the Wild", Price(12.55), Some(Author("Joe Jones")), publisher, Technical))
+  val technicalBooks = List(new Book("Scala Unleashed", Price(16.95), Some(author), publisher, Technical), new Book("Python in the Wild", Price(12.55), Some(Author("Joe Jones")), publisher, Technical))
   val historicalPublisher = Publisher("Historical Books Are Us", Address(5, "The Estate", "Market Town", "Hampshire", "HA3 4RR"))
   val historyBooks = List(new Book("The Wars of the Roses Retold", Price(12.34), Some(Author("Pete Andrews")), historicalPublisher, History))
   val fictionPublisher = Publisher("Adriana Books", Address(340, "Long Mile Road", "Swindon", "Wiltshire", "SN12 6ER"))
